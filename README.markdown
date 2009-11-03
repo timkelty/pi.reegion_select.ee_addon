@@ -40,4 +40,12 @@ Value for the "id" attribute of the <select> menu.
 
 Value for the "class" attribute of the <select> menu.
 
+`show=""`
+
+A pipe delimited list of values to show.
+
+`null_divider="false"`
+
+Include a divider option with a null value. Defaults to "true". 
+
 Insipiration from - and props to - Nathan Pitman's [UK Counties Select and US States Select plugins](http://expressionengine.com/forums/viewthread/94799/), and Bridging Unit's [Countries Select plugin](http://expressionengine.com/forums/viewthread/106803/).

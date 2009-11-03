@@ -45,18 +45,20 @@ class Reegion_select {
 		$class = ( $TMPL->fetch_param('class') == '' ) ? '' : ' class="' . $TMPL->fetch_param('class') . '"';
 		$selected = $TMPL->fetch_param('selected');
 		$codes = $TMPL->fetch_param('codes');
-        
+		$show = $TMPL->fetch_param('show'); // pipe delimited list of values to show
+		$null_divider = $TMPL->fetch_param('null_divider');
+		
 		$r = '<select name="' . $name . '"' . $id . $class . '>
-	<option value="">Select a ' . $label . '</option>
-	<option value="">--------------------</option>
-	';
+	        <option value="">Select a ' . $label . '</option>';
+	  $r .= ($null_divider == 'false') ? '' : '<option value="">--------------------</option>';
+		
 		$list = ( $list == 'rs_provinces_states' ) ? array_merge($this->rs_provinces, $this->rs_states) : $this->$list;
-			
 		foreach ($list as $k => $v) {
-			$val = ( $codes === 'true' && !is_numeric($k) ) ? $k : $v;
-			$sel = ($val == $selected) ? ' selected="selected"' : '';
-			$r .= '<option value="' . $val . '"' . $sel . '>' . $v . '</option>
-	';
+  			$val = ( $codes === 'true' && !is_numeric($k) ) ? $k : $v;
+  		if ( $show == '' || in_array($val, explode('|', $show))) {
+  			$sel = ($val == $selected) ? ' selected="selected"' : '';
+  			$r .= '<option value="' . $val . '"' . $sel . '>' . $v . '</option>';
+		  }
 		}
 		$r .= '</select>';
 		
@@ -137,6 +139,10 @@ selected="" - value of the <option> element that should be selected by default.
 id="" - value for the "id" attribute of the <select> menu.
 
 class="" - value for the "class" attribute of the <select> menu.
+
+show="" - A pipe delimited list of values to show.
+
+null_divider="false" - Include a divider <option> with a null value. Defaults to "true".
 
 Insipiration from - and props to - Nathan Pitman's UK Counties Select and US States Select plugins, and Bridging Unit's Countries Select plugin.
 
